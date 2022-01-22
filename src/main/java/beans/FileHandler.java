@@ -3,11 +3,13 @@ package beans;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
+
 
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class FileHandler {
     final static Logger logger = LoggerFactory.getLogger(FileHandler.class);
@@ -63,6 +65,7 @@ public class FileHandler {
         // create a tmpArticle writer
         if(!tmpArticle.createNewFile()){
             logger.error(String.format("create temp article file failed, name: %s", article.getName()));
+            tmpArticle.delete();
             return;
         };
         OutputStreamWriter write = new OutputStreamWriter(
@@ -137,6 +140,12 @@ public class FileHandler {
         String[] categories = article.getPath().split("/");
         bufferedWriter.write("---");
         bufferedWriter.newLine();
+        bufferedWriter.write("title: "+article.getName().replace(".md",""));
+        bufferedWriter.newLine();
+        SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date(System.currentTimeMillis());
+        bufferedWriter.write("date: "+formatter.format(date));
+        bufferedWriter.newLine();
         bufferedWriter.write("categories:");
         bufferedWriter.newLine();
         boolean startCat = false;
@@ -158,5 +167,23 @@ public class FileHandler {
         bufferedWriter.newLine();
         bufferedWriter.write("");
         bufferedWriter.newLine();
+    }
+
+    public String[] getUploadFilePaths() {
+        File[] tmpList = folder.listFiles();
+        String[] res = new String[tmpList.length];
+        for(int i=0; i<tmpList.length;i++){
+            res[i] = tmpList[i].getAbsolutePath();
+        }
+        return res;
+    }
+
+    public String[] getUploadFileNames() {
+        File[] tmpList = folder.listFiles();
+        String[] res = new String[tmpList.length];
+        for(int i=0; i<tmpList.length;i++){
+            res[i] = tmpList[i].getName();
+        }
+        return res;
     }
 }
