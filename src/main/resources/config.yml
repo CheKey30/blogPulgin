@@ -2,5 +2,5 @@ server-ip:
 username: root
 port: 22
 password:
-hexo-root:
-hexo-post:
+hexo-root: /usr/local/hexo/
+hexo-post: /usr/local/hexo/source/_posts/

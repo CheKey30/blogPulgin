@@ -1,4 +1,4 @@
-package beans;
+package com.bakedata.beans;
 
 import org.yaml.snakeyaml.Yaml;
 
@@ -12,12 +12,14 @@ public class ConfigHandler {
     }
 
 
-    private Map<String,Object> configs = new HashMap<>();
-    public void loadConf(String confName){
-        if(configs.isEmpty()){
+    private Map<String, Object> configs = new HashMap<>();
+
+    public void loadConf(String confName) {
+        if (configs.isEmpty()) {
+            System.out.println(ConfigHandler.class.getClassLoader().getResource(""));
             InputStream ymlStream = ConfigHandler.class.getClassLoader().getResourceAsStream(confName);
             Yaml yaml = new Yaml();
-            this.configs = yaml.loadAs(ymlStream,Map.class);
+            this.configs = yaml.loadAs(ymlStream, Map.class);
         }
     }
 }

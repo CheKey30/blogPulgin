@@ -14,5 +14,5 @@ output
 metastore_db
 .bsp
 null
-*.yml
-/src/main/resources/config.yml
+output
+

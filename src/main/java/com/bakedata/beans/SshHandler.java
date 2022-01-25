@@ -1,4 +1,4 @@
-package beans;
+package com.bakedata.beans;
 
 import com.jcraft.jsch.*;
 import org.slf4j.Logger;
@@ -15,25 +15,18 @@ public class SshHandler {
     private Session session;
     private boolean logined = false;
 
-    public SshHandler(int port, String ip, String userName, String password) {
+    public SshHandler(int port, String ip, String userName, String password) throws JSchException {
         this.port = port;
         this.userName = userName;
         this.password = password;
         // get connection
         JSch jSch = new JSch();
-        try {
-            session = jSch.getSession(userName, ip, port);
-            session.setPassword(password);
-            session.setConfig("StrictHostKeyChecking", "no");
-            session.connect(20000);
-            ;
-            logined = true;
-            logger.info("connected to remote server");
-        } catch (JSchException e) {
-            logined = false;
-            logger.error("connected failed");
-            logger.error(String.valueOf(e));
-        }
+        session = jSch.getSession(userName, ip, port);
+        session.setPassword(password);
+        session.setConfig("StrictHostKeyChecking", "no");
+        session.connect(20000);
+        logined = true;
+        logger.info("connected to remote server");
     }
 
     public void closeSession() {
@@ -99,16 +92,9 @@ public class SshHandler {
             channelSftp.put(in, remoteDir, ChannelSftp.OVERWRITE);
             in.close();
             channelSftp.exit();
-            logger.info("upload file "+localFile+" success!");
+            logger.info("upload file " + localFile + " success!");
         } catch (JSchException | SftpException | IOException e) {
             e.printStackTrace();
         }
-    }
-
-
-    public static void main(String[] args) {
-        SshHandler h = new SshHandler(22,"106.15.58.50","root","Ck142857285714");
-        h.uploadFile("/usr/local/hexo/source/_posts/快学Scala-1-基础.md","/Users/shuchen/blogArticles/BakeData/读书笔记/快学Scala/快学Scala-1-基础.md");
-
     }
 }
