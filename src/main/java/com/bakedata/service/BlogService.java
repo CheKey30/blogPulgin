@@ -1,6 +1,6 @@
 package com.bakedata.service;
 
-import com.bakedata.Main;
+
 import com.bakedata.beans.ConfigHandler;
 import com.bakedata.beans.FileHandler;
 import com.bakedata.beans.SshHandler;
@@ -68,5 +68,9 @@ public class BlogService {
         } finally {
             sshHandler.closeSession();
         }
+    }
+
+    public static boolean gitUpdate() {
+        return true;
     }
 }

@@ -27,6 +27,10 @@ public class Main {
             }
             if (!BlogService.remoteUpdate()) {
                 logger.error("update remote server failed");
+                return;
+            }
+            if(!BlogService.gitUpdate()){
+                logger.error("update git repository failed");
             }
         } else if (args.length == 2 && "-t".equals(args[1])) {
             if (!BlogService.articleTransService(args[0])) {
