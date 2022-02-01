@@ -3,6 +3,7 @@ package com.bakedata.service;
 
 import com.bakedata.beans.ConfigHandler;
 import com.bakedata.beans.FileHandler;
+import com.bakedata.beans.GitHandler;
 import com.bakedata.beans.SshHandler;
 import com.jcraft.jsch.JSchException;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ public class BlogService {
     private static FileHandler fileHandler;
     private static ConfigHandler configHandler;
     private static SshHandler sshHandler;
+    private static GitHandler gitHandler;
 
     public static boolean loadConfig() {
         configHandler = new ConfigHandler();
@@ -72,7 +74,7 @@ public class BlogService {
 
 
     public static boolean gitUpdate() {
-
-        return true;
+        gitHandler = new GitHandler(configHandler);
+        return gitHandler.commitAndPush();
     }
 }
