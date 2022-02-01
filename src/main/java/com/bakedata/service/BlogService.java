@@ -70,7 +70,9 @@ public class BlogService {
         }
     }
 
+
     public static boolean gitUpdate() {
+
         return true;
     }
 }
