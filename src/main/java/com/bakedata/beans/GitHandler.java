@@ -28,8 +28,10 @@ public class GitHandler {
             BufferedReader in = new BufferedReader(new InputStreamReader(proc.getInputStream()));
             PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(proc.getOutputStream())), true);
             out.println("cd "+LOCAL_REPO_PATH);
+            out.println("git pull");
             out.println("git add .");
             out.println("git commit -m \"auto update\"");
+            out.println("git push");
             out.println("exit");//这个命令必须执行，否则in流不结束。
             try {
                 String line;
