@@ -19,7 +19,7 @@ public class Main {
             logger.error("load config failed");
             return;
         }
-
+        // default full flow
         if (args.length == 1) {
             if (!BlogService.articleTransService(args[0])) {
                 logger.error("article trans failed");
@@ -32,15 +32,17 @@ public class Main {
             if (!BlogService.gitUpdate()) {
                 logger.error("update git repository failed");
             }
-        } else if (args.length == 2 && "-t".equals(args[1])) {
-            if (!BlogService.articleTransService(args[0])) {
-                logger.error("article trans failed");
-            }
-        } else if (args.length == 2 && "-g".equals(args[1])){
-            if (!BlogService.articleTransService(args[0])) {
-                logger.error("article trans failed");
+            //only update website and git
+        } else if (args.length == 2 && "-rg".equals(args[1])) {
+            if (!BlogService.remoteUpdate()) {
+                logger.error("update remote server failed");
                 return;
             }
+            if (!BlogService.gitUpdate()) {
+                logger.error("update git repository failed");
+            }
+            // only update git
+        } else if (args.length == 2 && "-g".equals(args[1])){
             if(!BlogService.gitUpdate()){
                 logger.error("git update failed");
             }

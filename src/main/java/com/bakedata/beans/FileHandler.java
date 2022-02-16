@@ -68,7 +68,7 @@ public class FileHandler {
             tmpArticle.delete();
             return;
         }
-        ;
+
         OutputStreamWriter write = new OutputStreamWriter(
                 new FileOutputStream(tmpArticle), StandardCharsets.UTF_8);
         BufferedWriter bufferedWriter = new BufferedWriter(write);
@@ -76,6 +76,7 @@ public class FileHandler {
         String lineTxt = bufferedReader.readLine();
         if (lineTxt == null || !lineTxt.contains("tags")) {
             logger.error("article must start with tags:tag1,tag2,tag3...");
+            tmpArticle.delete();
             return;
         } else {
             writeHead(lineTxt, bufferedWriter);
@@ -143,6 +144,7 @@ public class FileHandler {
             tags = lineTxt.split("：")[1].split(",");
         }else {
             logger.error("tags line is wrong, please check the article");
+            tmpArticle.delete();
             return;
         }
         String[] categories = article.getPath().split("/");
